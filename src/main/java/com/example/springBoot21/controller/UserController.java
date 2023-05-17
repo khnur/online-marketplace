@@ -32,11 +32,4 @@ public class UserController {
         return userService.getUserByPhone(phone);
     }
 
-    @ExceptionHandler(UserAlreadyExistsException.class)
-    public ResponseEntity<?> handleUserAlreadyExists(RuntimeException e) {
-        return ResponseEntity.status(409).body(
-                new ErrorDto(Calendar.getInstance().getTime(), 409, "Conflict", "/users", e.getMessage())
-        );
-    }
-
 }

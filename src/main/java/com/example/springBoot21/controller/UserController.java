@@ -1,14 +1,12 @@
 package com.example.springBoot21.controller;
 
-import com.example.springBoot21.dto.ErrorDto;
 import com.example.springBoot21.dto.UserDto;
-import com.example.springBoot21.exceptions.UserAlreadyExistsException;
+import com.example.springBoot21.mappers.UserListMapper;
+import com.example.springBoot21.mappers.UserMapper;
 import com.example.springBoot21.service.IUserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Calendar;
 import java.util.List;
 
 @RestController
@@ -19,17 +17,21 @@ public class UserController {
 
     @PostMapping
     public UserDto createUser(@RequestBody UserDto userDto) {
-        return userService.createUser(userDto);
+        return UserMapper.INSTANCE.userToUserDto(
+                userService.createUser(
+                        UserMapper.INSTANCE.userDtoToUser(userDto)
+                )
+        );
     }
 
     @GetMapping
     public List<UserDto> getAllUsers() {
-        return userService.getAllUsers();
+        return UserListMapper.INSTANCE.userListToUserDtoList(userService.getAllUsers());
     }
 
     @GetMapping("/{phone}")
     public UserDto getUserByPhone(@PathVariable String phone) {
-        return userService.getUserByPhone(phone);
+        return UserMapper.INSTANCE.userToUserDto(userService.getUserByPhone(phone));
     }
 
 }

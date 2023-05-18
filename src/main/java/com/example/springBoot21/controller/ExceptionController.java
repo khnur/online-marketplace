@@ -7,13 +7,14 @@ import com.example.springBoot21.exceptions.UserNotExistsException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.Date;
 
 import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
-
+@RestControllerAdvice
 public class ExceptionController {
     @ExceptionHandler(ItemNotExistsException.class)
     public ResponseEntity<?> handleItemNotFound(HttpServletRequest request, RuntimeException e) {
